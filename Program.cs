@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using API_ASP_NET_CORE.DB;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,5 +22,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/", () => "Hello World!");
+
+app.MapGet("/Products/{id}", (int id) => ProductDB.GetProduct(id));
+app.MapGet("/Products", () => ProductDB.GetProducts());
+app.MapPost("/Products", (Product Product) => ProductDB.CreateProduct(Product));
+app.MapPut("/Products", (Product Product) => ProductDB.UpdateProduct(Product));
+app.MapDelete("/Products/{id}", (int id) => ProductDB.RemoveProduct(id));
 
 app.Run();
